@@ -1,0 +1,33 @@
+package com.shreyash.accounts.controller;
+
+import com.netflix.discovery.converters.Auto;
+import com.shreyash.accounts.dto.CustomerDetailsDto;
+import com.shreyash.accounts.service.CustomerService;
+import jakarta.validation.constraints.Pattern;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(path = "/api/accounts",produces = MediaType.APPLICATION_JSON_VALUE)
+@Validated
+public class CustomerController {
+    
+    @Autowired
+    private CustomerService customerService;
+
+
+    @GetMapping("/fetchCustomerDetails")
+    public ResponseEntity<CustomerDetailsDto> fetchCustomerDetails(@RequestParam
+                                                                   @Pattern(regexp = "^[0-9]{10}$",message = "Mobile number should be 10 digits")
+                                                                       String mobileNumber){
+        CustomerDetailsDto customerDetailsDto = customerService.fetchCustomerDetails(mobileNumber);
+        return new ResponseEntity<>(customerDetailsDto, HttpStatus.OK);
+    }
+}

@@ -1,0 +1,4 @@
+package com.shreyash.loans.service;
+
+public class ILoansService {
+}
