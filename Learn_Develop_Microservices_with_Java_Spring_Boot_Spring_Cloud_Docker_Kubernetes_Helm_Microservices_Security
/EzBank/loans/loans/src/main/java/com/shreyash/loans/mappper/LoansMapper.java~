@@ -1,0 +1,4 @@
+package com.shreyash.loans.mappper;
+
+public class LoansMapper {
+}
